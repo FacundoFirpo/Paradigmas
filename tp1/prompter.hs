@@ -4,6 +4,8 @@ module Prompter ( Prompter, nuevoP, archivosR, departamentosP, configurarP, anun
 import Tipos
 import Anuncio
 import FileSystem
+import FileSystem (anunciosF)
+import Control.Monad (when)
 
 data Prompter = Pro FileSystem  [Departamento] Int deriving (Eq, Show)
 
@@ -17,15 +19,18 @@ departamentosP :: Prompter -> [Departamento]           -- dado un prompter retor
 departamentosP (Pro _ depts) = depts
 
 configurarP :: Prompter -> [Departamento] -> Prompter  -- Prepara el prompter para emitir los anuncios en los departementos indicados
--- usar anunciosParaF
+configurarP prompt depts | null [dept| dept <- depts, notElem dept (departamentosP prompt)] = prompt
+                         | otherwise = Pro () (depts)
 
-nunciosP :: Prompter ->  [Nombre]                      -- entrega la lista de nombres de anuncios configurados
-
+anunciosP :: Prompter ->  [Nombre]                      -- entrega la lista de nombres de anuncios configurados
+anunciosP prompt = map nombreA (anunciosF (archivosR prompt))
 
 showP :: Prompter -> Anuncio                           -- muestra el anuncio actual 
-
+showP prompt = head (anunciosF (archivosR prompt))
 
 avanzarP :: Prompter -> Prompter                       -- pasa al siguiente anuncio
+avanzarP prompt = Pro (FS (departamentosF fs) (tail anuns ++ [head anuns])) (departamentosP prompt)
+    where fs = archivosR prompt; anuns = anunciosF fs
 
-
-duracionP :: Prompter -> Duracion                      -- indica la duracion total de los anuncios configurados 
+duracionP :: Prompter -> Duracion                      -- indica la duracion total de los anuncios configurados
+duracionP prompt = sum (map duracionA (anunciosF(archivosR prompt)))
