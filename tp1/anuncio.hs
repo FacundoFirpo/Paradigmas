@@ -1,4 +1,4 @@
-module Anuncio ( Anuncio, nuevoA, nombreA, duracionA, departamentosA, agreagarA, sacarA, aplicaA )
+module Anuncio ( Anuncio, nuevoA, nombreA, duracionA, departamentosA, agregarA, sacarA, aplicaA )
   where
 
 import Tipos
@@ -18,12 +18,14 @@ duracionA (Anu _ _ dur) = dur
 departamentosA :: Anuncio -> [ Departamento ]   -- dado un anuncio retorna los departamentos que le fueron asociados
 departamentosA (Anu _ depts _) = depts
 
-agreagarA :: Departamento -> Anuncio -> Anuncio -- permite asignar un departamento a un anuncio
-agreagarA dept anun | elem dept (departamentosA anun) = anun
-                    | otherwise = dept : departamentosA
+agregarA :: Departamento -> Anuncio -> Anuncio -- permite asignar un departamento a un anuncio
+agregarA dept anun | elem dept (departamentosA anun) = anun
+                    | otherwise = Anu (nombreA anun) (dept : departamentosA anun) (duracionA anun) 
 
 sacarA :: Departamento -> Anuncio -> Anuncio    -- permite quitarle un departamento a un anuncio
-
+sacarA dept anun | notElem dept (departamentosA anun) = error "el anunucio no tiene ese departamento"
+                 | otherwise = Anu (nombreA anun) nDepts (duracionA anun)
+        where nDepts = [y| y <- departamentosA anun, y /= dept]
 
 aplicaA :: [ Departamento ] -> Anuncio -> Bool  -- responde si un anuncio debe emitirse para alguno de los departamentos consultados
-aplicaA depts anun =  length [y| y <- departamentosA anun, elem y depts] \= 0
+aplicaA depts anun =  not (null [y| y <- departamentosA anun, elem y depts])
