@@ -20,7 +20,7 @@ departamentosA (Anu _ depts _) = depts
 
 agregarA :: Departamento -> Anuncio -> Anuncio -- permite asignar un departamento a un anuncio
 agregarA dept anun | elem dept (departamentosA anun) = anun
-                    | otherwise = Anu (nombreA anun) (dept : departamentosA anun) (duracionA anun) 
+                   | otherwise = Anu (nombreA anun) (dept : departamentosA anun) (duracionA anun) 
 
 sacarA :: Departamento -> Anuncio -> Anuncio    -- permite quitarle un departamento a un anuncio
 sacarA dept anun | notElem dept (departamentosA anun) = error "el anunucio no tiene ese departamento"
