@@ -24,16 +24,18 @@ iteradorP (Pro _ _ it) = it
 
 configurarP :: Prompter -> [Departamento] -> Prompter  -- Prepara el prompter para emitir los anuncios en los departementos indicados
 configurarP prompt depts | not (null [dept| dept <- depts, notElem dept (departamentosF (archivosR prompt))]) = error "el file system del prompter no abarca alguno de los departamentos indicados"
+                         | null (anunciosParaF depts (archivosR prompt)) = error "no hay anuncios para los departamentos indicados"
                          | otherwise = Pro (archivosR prompt) depts 0
 
 anunciosP :: Prompter -> [Nombre]                      -- entrega la lista de nombres de anuncios configurados
 anunciosP prompt = map nombreA (anunciosF (archivosR prompt))
 
 showP :: Prompter -> Anuncio                           -- muestra el anuncio actual 
-showP prompt =  anunciosF (archivosR prompt) !! iteradorP prompt
+showP prompt =  anunciosParaF (departamentosP prompt) (archivosR prompt) !! iteradorP prompt
 
 avanzarP :: Prompter -> Prompter                       -- pasa al siguiente anuncio
-avanzarP prompt = Pro (archivosR prompt) (departamentosP prompt) (iteradorP prompt + 1)
+avanzarP prompt | (iteradorP prompt + 1) < length (anunciosParaF (departamentosP prompt) (archivosR prompt)) = Pro (archivosR prompt) (departamentosP prompt) (iteradorP prompt + 1)
+                | otherwise = Pro (archivosR prompt) (departamentosP prompt) 0
 
 duracionP :: Prompter -> Duracion                      -- indica la duracion total de los anuncios configurados
 duracionP prompt = sum (map duracionA (anunciosF(archivosR prompt)))
