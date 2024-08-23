@@ -28,22 +28,30 @@ testA = [nombreA anun1 == "anuncio1",
 -- test fileSystem
 
 fs1 = nuevoF
-fs2 = agregarAnuncioF anun1 fs1
-fs3 = agregarAnuncioF anun2 fs2
+fs2 = agregarAnuncioF anun1dept1 fs1
+fs3 = agregarAnuncioF anun1depts12 fs2
 
 fs1d1 = agregarDepartamentoF "dept1" fs1
 fs1d12 = agregarDepartamentoF "dept2" fs1d1
 
-testFS = [anunciosF fs1 == [],
-          anunciosF fs2 == [anun1],
-          anunciosF fs3 == [anun2, anun1],
-          anunciosParaF ["dept1"] fs3 == [anun1],
-          anunciosPara fs3 ["dept2"] == [anun2],
-          anunciosPara fs3 ["dept1", "dept2"] == [anun2, anun1],
-          anunciosPara fs3 ["dept3"] == []]
 
-testFS = []
+testFS = [departamentosF fs1 == [],
+          departamentosF fs1d1 == ["dept1"],
+          anunciosF fs1 == [],
+          anunciosF fs2 == [anun1dept1],
+          anunciosF fs3 == [anun1depts12, anun1dept1],
+          anunciosParaF ["dept1"] fs3 == [anun1depts12, anun1dept1],
+          anunciosParaF ["dept2"] fs3 == [anun1depts12],
+          anunciosParaF ["dept1", "dept2"] fs3 == [anun1depts12, anun1dept1],
+          anunciosParaF ["dept3"] fs3 == [],
+          sacarAnuncioF anun1depts12 fs3 == fs2,
+          sacarDepartamentoF "dept2" fs1d12 == fs1d1]
 
 
 -- test prompter
+
+prompt1 = nuevoP fs3
+prompt2 = configurarP prompt1 ["dept1"]
+prompt3 = configurarP prompt2 ["dept2"]
+
 
