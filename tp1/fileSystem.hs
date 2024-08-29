@@ -34,4 +34,5 @@ sacarDepartamentoF dept fs | notElem dept (departamentosF fs) = error "el depart
                         where nDepts = [y| y <- departamentosF fs, y /= dept] -- no tiene sentido tener un anuncio para un departamwnto que no existe
 
 anunciosParaF :: [Departamento] -> FileSystem -> [Anuncio]        -- entrega los anuncios a emitir para un conjunto de departamentos
-anunciosParaF depts fs = [anun| anun <- anunciosF fs, aplicaA depts anun]
+anunciosParaF depts fs  | null (depts) = error "el conjunto de departamentos esta vacio"
+                        | otherwise = [anun| anun <- anunciosF fs, aplicaA depts anun]
