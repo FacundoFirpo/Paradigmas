@@ -28,7 +28,7 @@ configurarP prompt depts | not (null [dept| dept <- depts, notElem dept (departa
                          | otherwise = Pro (archivosR prompt) depts 0
 
 anunciosP :: Prompter -> [Nombre]                      -- entrega la lista de nombres de anuncios configurados
-anunciosP prompt = map nombreA (anunciosF (archivosR prompt))
+anunciosP prompt = map nombreA (anunciosParaF (departamentosP prompt) (archivosR prompt))
 
 showP :: Prompter -> Anuncio                           -- muestra el anuncio actual 
 showP prompt =  anunciosParaF (departamentosP prompt) (archivosR prompt) !! iteradorP prompt
@@ -38,4 +38,4 @@ avanzarP prompt | (iteradorP prompt + 1) < length (anunciosParaF (departamentosP
                 | otherwise = Pro (archivosR prompt) (departamentosP prompt) 0
 
 duracionP :: Prompter -> Duracion                      -- indica la duracion total de los anuncios configurados
-duracionP prompt = sum (map duracionA (anunciosF(archivosR prompt)))
+duracionP prompt = sum (map duracionA (anunciosParaF (departamentosP prompt) (archivosR prompt)))
