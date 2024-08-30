@@ -1,4 +1,4 @@
-module Prompter ( Prompter, nuevoP, archivosR, departamentosP, configurarP, anunciosP, showP, avanzarP, duracionP )
+module Prompter ( Prompter, nuevoP, archivosR, departamentosP, iteradorP, configurarP, anunciosP, showP, avanzarP, duracionP )
     where
 
 import Tipos
@@ -31,7 +31,7 @@ anunciosP :: Prompter -> [Nombre]                      -- entrega la lista de no
 anunciosP prompt = map nombreA (anunciosParaF (departamentosP prompt) (archivosR prompt))
 
 showP :: Prompter -> Anuncio                           -- muestra el anuncio actual 
-showP prompt =  anunciosParaF (departamentosP prompt) (archivosR prompt) !! iteradorP prompt
+showP prompt = anunciosParaF (departamentosP prompt) (archivosR prompt) !! iteradorP prompt
 
 avanzarP :: Prompter -> Prompter                       -- pasa al siguiente anuncio
 avanzarP prompt | (iteradorP prompt + 1) < length (anunciosParaF (departamentosP prompt) (archivosR prompt)) = Pro (archivosR prompt) (departamentosP prompt) (iteradorP prompt + 1)
