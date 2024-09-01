@@ -23,7 +23,8 @@ iteradorP :: Prompter -> Int                           -- dado un prompter retor
 iteradorP (Pro _ _ it) = it
 
 configurarP :: Prompter -> [Departamento] -> Prompter  -- Prepara el prompter para emitir los anuncios en los departementos indicados
-configurarP prompt depts | not (null [dept| dept <- depts, notElem dept (departamentosF (archivosR prompt))]) = error "el file system del prompter no abarca alguno de los departamentos indicados"
+configurarP prompt depts | null depts = error "no se puede configurar el prompter con un conjunto de departamentos vacio"
+                         | not (null [dept| dept <- depts, notElem dept (departamentosF (archivosR prompt))]) = error "el file system del prompter no abarca alguno de los departamentos indicados"
                          | null (anunciosParaF depts (archivosR prompt)) = error "no hay anuncios para los departamentos indicados"
                          | otherwise = Pro (archivosR prompt) depts 0
 
