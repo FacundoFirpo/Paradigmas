@@ -5,9 +5,9 @@ import java.util.List;
 
 public class Tree {
 
-    private Object contenido;
-    private Tree left = null;
-    private Tree right = null;
+    protected Object contenido;
+    protected Tree left = EmptyTree.getInstance();
+    protected Tree right = EmptyTree.getInstance();
 
     public Tree( Object contenido ) {
         this.contenido = contenido;
@@ -23,10 +23,10 @@ public class Tree {
             Tree vertice = (Tree) pila.removeLast();
             if (!visitados.contains( vertice )) {
                 visitados.add( vertice );
-                if (vertice.right != null) {
+                if (vertice.right.carga() != null) {
                     pila.add( vertice.right );
                 }
-                if (vertice.left != null) {
+                if (vertice.left.carga() != null) {
                     pila.add( vertice.left );
                 }
             }
@@ -50,10 +50,10 @@ public class Tree {
             Tree vertice = (Tree) cola.remove( 0 );
             if (!visitados.contains( vertice )) {
                 visitados.add( vertice );
-                if (vertice.left != null) {
+                if (vertice.left.carga() != null) {
                     cola.add( vertice.left );
                 }
-                if (vertice.right != null) {
+                if (vertice.right.carga() != null) {
                     cola.add( vertice.right );
                 }
             }
@@ -79,20 +79,22 @@ public class Tree {
     }
 
     public Tree right() {
-        if (right == null) {
-            throw new RuntimeException( "Nada a la diestra!" );
-        }
-        return right;
+        return right.getFromRight();
     }
 
     public Tree left() {
-        if (left == null) {
-            throw new RuntimeException( "Nada a la siniestra!" );
-        }
-        return left;
+        return left.getFromLeft();
     }
 
     public Object carga() {
         return contenido;
+    }
+
+    protected Tree getFromRight() {
+        return this;
+    }
+
+    protected Tree getFromLeft() {
+        return this;
     }
 }
