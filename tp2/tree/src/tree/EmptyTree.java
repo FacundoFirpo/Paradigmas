@@ -2,17 +2,16 @@ package tree;
 
 public class EmptyTree extends Tree {
 
-    private static final EmptyTree INSTANCE = new EmptyTree();
-
-    private EmptyTree() {
+    protected EmptyTree() {
         super(null);
         this.left = null;
         this.right = null;
     }
 
-    public static EmptyTree getInstance() {
-        return INSTANCE;
+    protected Tree createEmptyNode() {
+        return null;
     }
+
     public Object carga(){
         return null;
     }

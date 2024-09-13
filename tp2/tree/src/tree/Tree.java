@@ -6,21 +6,27 @@ import java.util.List;
 public class Tree {
 
     protected Object contenido;
-    protected Tree left = EmptyTree.getInstance();
-    protected Tree right = EmptyTree.getInstance();
+    protected Tree left;
+    protected Tree right;
 
     public Tree( Object contenido ) {
         this.contenido = contenido;
+        this.left = createEmptyNode();
+        this.right = createEmptyNode();
     }
 
-    public List dfs() {
+    protected Tree createEmptyNode() {
+        return new EmptyTree();
+    }
+
+    public List<Object> dfs() {
 
         List<Object> dfs = new ArrayList<Object>();
         List<Tree> pila = new ArrayList<Tree>();
         pila.add( this );
 
         while (!pila.isEmpty()) {
-            Tree vertice = (Tree) pila.removeLast();
+            Tree vertice = pila.removeLast();
             dfs.add(vertice.carga());
             if (vertice.right.carga() != null) {
                 pila.add(vertice.right);
@@ -33,14 +39,14 @@ public class Tree {
         return dfs;
     }
 
-    public List bfs() {
+    public List<Object> bfs() {
 
         List<Object> bfs = new ArrayList<Object>();
         List<Tree> cola = new ArrayList<Tree>();
         cola.add( this );
 
         while (!cola.isEmpty()) {
-            Tree vertice = (Tree) cola.removeFirst();
+            Tree vertice = cola.removeFirst();
             bfs.add( vertice.carga() );
             if (vertice.left.carga() != null) {
                 cola.add( vertice.left );
