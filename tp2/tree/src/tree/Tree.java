@@ -21,20 +21,16 @@ public class Tree {
 
         while (!pila.isEmpty()) {
             Tree vertice = (Tree) pila.removeLast();
-            if (!visitados.contains(vertice)) {
-                visitados.add(vertice);
-                if (vertice.right.carga() != null) {
-                    pila.add(vertice.right);
-                }
-                if (vertice.left.carga() != null) {
-                    pila.add(vertice.left);
-                }
+            visitados.add(vertice);
+            if (vertice.right.carga() != null) {
+                pila.add(vertice.right);
+            }
+            if (vertice.left.carga() != null) {
+                pila.add(vertice.left);
             }
         }
         List dfs = new ArrayList();
-        for (Object vertice : visitados) {
-            dfs.add( ((Tree) vertice).contenido );
-        }
+        visitados.forEach(v -> dfs.add( ((Tree) v).contenido ) );
 
         return dfs;
     }
@@ -47,21 +43,17 @@ public class Tree {
 
         while (!cola.isEmpty()) {
             Tree vertice = (Tree) cola.remove( 0 );
-            if (!visitados.contains( vertice )) {
-                visitados.add( vertice );
-                if (vertice.left.carga() != null) {
-                    cola.add( vertice.left );
-                }
-                if (vertice.right.carga() != null) {
-                    cola.add( vertice.right );
-                }
+            visitados.add( vertice );
+            if (vertice.left.carga() != null) {
+                cola.add( vertice.left );
+            }
+            if (vertice.right.carga() != null) {
+                cola.add( vertice.right );
             }
         }
 
         List bfs = new ArrayList();
-        for (Object vertice : visitados) {
-            bfs.add( ((Tree) vertice).contenido );
-        }
+        visitados.forEach(v -> bfs.add( ((Tree) v).contenido ) );
 
         return bfs;
 
