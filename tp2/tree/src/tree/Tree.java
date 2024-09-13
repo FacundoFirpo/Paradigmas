@@ -21,17 +21,16 @@ public class Tree {
 
         while (!pila.isEmpty()) {
             Tree vertice = (Tree) pila.removeLast();
-            if (!visitados.contains( vertice )) {
-                visitados.add( vertice );
+            if (!visitados.contains(vertice)) {
+                visitados.add(vertice);
                 if (vertice.right.carga() != null) {
-                    pila.add( vertice.right );
+                    pila.add(vertice.right);
                 }
                 if (vertice.left.carga() != null) {
-                    pila.add( vertice.left );
+                    pila.add(vertice.left);
                 }
             }
         }
-
         List dfs = new ArrayList();
         for (Object vertice : visitados) {
             dfs.add( ((Tree) vertice).contenido );
