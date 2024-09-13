@@ -15,13 +15,13 @@ public class Tree {
 
     public List dfs() {
 
-        List visitados = new ArrayList();
-        List pila = new ArrayList();
+        List<Object> dfs = new ArrayList<Object>();
+        List<Tree> pila = new ArrayList<Tree>();
         pila.add( this );
 
         while (!pila.isEmpty()) {
             Tree vertice = (Tree) pila.removeLast();
-            visitados.add(vertice);
+            dfs.add(vertice.carga());
             if (vertice.right.carga() != null) {
                 pila.add(vertice.right);
             }
@@ -29,21 +29,19 @@ public class Tree {
                 pila.add(vertice.left);
             }
         }
-        List dfs = new ArrayList();
-        visitados.forEach(v -> dfs.add( ((Tree) v).contenido ) );
 
         return dfs;
     }
 
     public List bfs() {
 
-        List visitados = new ArrayList();
-        List cola = new ArrayList();
+        List<Object> bfs = new ArrayList<Object>();
+        List<Tree> cola = new ArrayList<Tree>();
         cola.add( this );
 
         while (!cola.isEmpty()) {
-            Tree vertice = (Tree) cola.remove( 0 );
-            visitados.add( vertice );
+            Tree vertice = (Tree) cola.removeFirst();
+            bfs.add( vertice.carga() );
             if (vertice.left.carga() != null) {
                 cola.add( vertice.left );
             }
@@ -51,9 +49,6 @@ public class Tree {
                 cola.add( vertice.right );
             }
         }
-
-        List bfs = new ArrayList();
-        visitados.forEach(v -> bfs.add( ((Tree) v).contenido ) );
 
         return bfs;
 
