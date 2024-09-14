@@ -1,5 +1,7 @@
 package tree;
 
+import java.util.List;
+
 public class EmptyTree extends Tree {
 
     protected EmptyTree() {
@@ -11,6 +13,10 @@ public class EmptyTree extends Tree {
     protected Tree createEmptyNode() {
         return null;
     }
+
+    public void forDfs( List<Object> dfs ) {}
+
+    public void forBfs( List<Object> bfs ) {}
 
     public Object carga(){
         return null;

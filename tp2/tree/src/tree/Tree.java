@@ -1,6 +1,7 @@
 package tree;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Tree {
@@ -20,44 +21,30 @@ public class Tree {
     }
 
     public List<Object> dfs() {
-
         List<Object> dfs = new ArrayList<Object>();
-        List<Tree> pila = new ArrayList<Tree>();
-        pila.add( this );
-
-        while (!pila.isEmpty()) {
-            Tree vertice = pila.removeLast();
-            dfs.add(vertice.carga());
-            if (vertice.right.carga() != null) {
-                pila.add(vertice.right);
-            }
-            if (vertice.left.carga() != null) {
-                pila.add(vertice.left);
-            }
-        }
-
+        forDfs( dfs );
         return dfs;
     }
 
+    public void forDfs( List<Object> dfs ) {
+        dfs.add( carga() );
+        left.forDfs( dfs );
+        right.forDfs( dfs );
+    }
+
     public List<Object> bfs() {
-
         List<Object> bfs = new ArrayList<Object>();
-        List<Tree> cola = new ArrayList<Tree>();
-        cola.add( this );
-
-        while (!cola.isEmpty()) {
-            Tree vertice = cola.removeFirst();
-            bfs.add( vertice.carga() );
-            if (vertice.left.carga() != null) {
-                cola.add( vertice.left );
-            }
-            if (vertice.right.carga() != null) {
-                cola.add( vertice.right );
-            }
-        }
-
+        bfs.add( carga() );
+        forBfs( bfs );
+        bfs.removeAll( Arrays.asList((Object) null) );
         return bfs;
+    }
 
+    public void forBfs( List<Object> bfs ) {
+        bfs.add( left.carga() );
+        bfs.add( right.carga() );
+        left.forBfs( bfs );
+        right.forBfs( bfs );
     }
 
     public Tree atLeft( Tree leftTree ) {
