@@ -14,9 +14,9 @@ public class EmptyTree extends Tree {
         return null;
     }
 
-    public void forDfs( List<Object> dfs ) {}
+    public void prepareDfs( List<Object> dfs ) {}
 
-    public void forBfs( List<Object> bfs ) {}
+    public void prepareBfs( List<Object> bfs ) {}
 
     public Object carga(){
         return null;

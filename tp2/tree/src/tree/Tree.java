@@ -22,29 +22,29 @@ public class Tree {
 
     public List<Object> dfs() {
         List<Object> dfs = new ArrayList<Object>();
-        forDfs( dfs );
+        prepareDfs( dfs );
         return dfs;
     }
 
-    public void forDfs( List<Object> dfs ) {
+    public void prepareDfs( List<Object> dfs ) {
         dfs.add( carga() );
-        left.forDfs( dfs );
-        right.forDfs( dfs );
+        left.prepareDfs( dfs );
+        right.prepareDfs( dfs );
     }
 
     public List<Object> bfs() {
         List<Object> bfs = new ArrayList<Object>();
         bfs.add( carga() );
-        forBfs( bfs );
+        prepareBfs( bfs );
         bfs.removeAll( Arrays.asList((Object) null) );
         return bfs;
     }
 
-    public void forBfs( List<Object> bfs ) {
+    public void prepareBfs( List<Object> bfs ) {
         bfs.add( left.carga() );
         bfs.add( right.carga() );
-        left.forBfs( bfs );
-        right.forBfs( bfs );
+        left.prepareBfs( bfs );
+        right.prepareBfs( bfs );
     }
 
     public Tree atLeft( Tree leftTree ) {
