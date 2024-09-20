@@ -13,47 +13,30 @@ public class Tree {
     }
 
     public List<Object> dfs() {
-        List<Object> result = new ArrayList<>();
-        Stack<Tree> stack = new Stack<>();
-        stack.push(this);
+        List<Object> dfs = new ArrayList<>();
+        prepareDfs( dfs );
+        return dfs;
+    }
 
-        while (!stack.isEmpty()) {
-            Tree node = stack.pop();
-            result.add(node.carga());
-
-            try {
-                stack.push(node.right());
-            } catch (RuntimeException e) {
-            }
-
-            try {
-                stack.push(node.left());
-            } catch (RuntimeException e) {
-            }
-        }
-        return result;
+    public void prepareDfs( List<Object> dfs ) {
+        dfs.add( carga() );
+        left.prepareDfs( dfs );
+        right.prepareDfs( dfs );
     }
 
     public List<Object> bfs() {
-        List<Object> result = new ArrayList<>();
-        Queue<Tree> queue = new LinkedList<>();
-        queue.add(this);
+        List<Object> bfs = new ArrayList<Object>();
+        bfs.add( carga() );
+        prepareBfs( bfs );
+        bfs.removeAll( Arrays.asList( (Object) null ) );
+        return bfs;
+    }
 
-        while (!queue.isEmpty()) {
-            Tree node = queue.poll();
-            result.add(node.carga());
-
-            try {
-                queue.add(node.left());
-            } catch (RuntimeException e) {
-            }
-
-            try {
-                queue.add(node.right());
-            } catch (RuntimeException e) {
-            }
-        }
-        return result;
+    public void prepareBfs( List<Object> bfs ) {
+        bfs.add( left.carga() );
+        bfs.add( right.carga() );
+        left.prepareBfs( bfs );
+        right.prepareBfs( bfs );
     }
 
     public Tree atLeft( Tree leftTree ) {

@@ -1,5 +1,7 @@
 package tree2;
 
+import java.util.List;
+
 public class EmptyLink extends Link {
 
     public Tree getFromRight() {
@@ -13,4 +15,8 @@ public class EmptyLink extends Link {
     public Object carga() {
         return null;
     }
+
+    public void prepareDfs( List<Object> dfs ) {}
+
+    public void prepareBfs( List<Object> bfs ) {}
 }
