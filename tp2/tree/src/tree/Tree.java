@@ -1,27 +1,22 @@
 package tree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Tree {
 
     protected Object contenido;
-    protected Tree left;
-    protected Tree right;
+    private Link left = new EmptyLink();
+    private Link right = new EmptyLink();
 
     public Tree( Object contenido ) {
         this.contenido = contenido;
-        this.left = createEmptyNode();
-        this.right = createEmptyNode();
-    }
-
-    protected Tree createEmptyNode() {
-        return new EmptyTree();
     }
 
     public List<Object> dfs() {
-        List<Object> dfs = new ArrayList<Object>();
+        List<Object> dfs = new ArrayList<>();
         prepareDfs( dfs );
         return dfs;
     }
@@ -33,27 +28,27 @@ public class Tree {
     }
 
     public List<Object> bfs() {
-        List<Object> bfs = new ArrayList<Object>();
-        bfs.add( carga() );
-        prepareBfs( bfs );
-        bfs.removeAll( Arrays.asList((Object) null) );
-        return bfs;
-    }
+        List<Object> result = new ArrayList<>();
+        Queue<Tree> queue = new LinkedList<>();
+        queue.add(this);
 
-    public void prepareBfs( List<Object> bfs ) {
-        bfs.add( left.carga() );
-        bfs.add( right.carga() );
-        left.prepareBfs( bfs );
-        right.prepareBfs( bfs );
+        while (!queue.isEmpty()) {
+            Tree node = queue.poll();
+            result.add(node.carga());
+
+            node.left.prepareBfs(queue);
+            node.right.prepareBfs(queue);
+        }
+        return result;
     }
 
     public Tree atLeft( Tree leftTree ) {
-        left = leftTree;
+        left = left.atLeft( leftTree );
         return this;
     }
 
     public Tree atRight( Tree rightTree ) {
-        right = rightTree;
+        right = right.atRight( rightTree );
         return this;
     }
 
@@ -67,13 +62,5 @@ public class Tree {
 
     public Object carga() {
         return contenido;
-    }
-
-    protected Tree getFromRight() {
-        return this;
-    }
-
-    protected Tree getFromLeft() {
-        return this;
     }
 }
