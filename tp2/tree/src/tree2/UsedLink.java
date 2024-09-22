@@ -1,6 +1,7 @@
 package tree2;
 
 import java.util.List;
+import java.util.Queue;
 
 public class UsedLink extends Link{
 
@@ -18,15 +19,11 @@ public class UsedLink extends Link{
         return node;
     }
 
-    public Object carga(){
-        return node.carga();
-    }
-
     public void prepareDfs( List<Object> dfs ){
         node.prepareDfs( dfs );
     }
 
-    public void prepareBfs( List<Object> bfs ){
-        node.prepareBfs( bfs );
+    public void prepareBfs(Queue<Tree> queue) {
+        queue.add(node);
     }
 }

@@ -1,6 +1,7 @@
 package tree2;
 
 import java.util.List;
+import java.util.Queue;
 
 public class EmptyLink extends Link {
 
@@ -12,11 +13,7 @@ public class EmptyLink extends Link {
         throw new RuntimeException("Nada a la siniestra!");
     }
 
-    public Object carga() {
-        return null;
-    }
-
     public void prepareDfs( List<Object> dfs ) {}
 
-    public void prepareBfs( List<Object> bfs ) {}
+    public void prepareBfs(Queue<Tree> queue) {}
 }
