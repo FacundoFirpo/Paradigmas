@@ -162,8 +162,4 @@ public class TreeTest {
         return new Tree( 'a' ).atLeft( new Tree( 'b' ) ).atRight( new Tree( 'c' ) );
     }
 
-    private static void assertThrowsLike( String expectedMsg, Executable expression ) {
-        assertEquals( expectedMsg,
-                      assertThrows( RuntimeException.class, expression ).getMessage() );
-    }
 }
