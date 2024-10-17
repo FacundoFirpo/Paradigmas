@@ -33,8 +33,11 @@ public class Rover {
 
     public void execute( String instruction ) {
         instruction.chars()
+                .takeWhile(c -> c == 'f' || c == 'b' || c == 'l' || c == 'r' ||
+                        c == 'O' || c == 'o' || c == 'c' || c == 'a' || c == 'i')
                 .forEach( order -> execute( (char) order ) );
     }
+
 
     public void execute( char order ) {
         Instructions.instructionFor( order,this );

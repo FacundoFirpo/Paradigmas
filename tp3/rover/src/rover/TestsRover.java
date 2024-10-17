@@ -65,7 +65,7 @@ public class TestsRover {
     }
 
     @Test
-    public void test08RoverCanInDifferentDirection(){
+    public void test08RoverCanMoveInDifferentDirection(){
         Rover rover = new Rover(0, 0, new North() );
         rover.execute("frf");
         assertArrayEquals( new int[]{1, 1}, rover.getPosition() );
@@ -73,27 +73,44 @@ public class TestsRover {
     }
 
     @Test
-    public void test09RoverCanOpenTopHatch(){
+    public void test09RoverStopMovingIfWrongInstruction(){
+        Rover rover = new Rover(0, 0, new North() );
+        rover.execute("frfzrf");
+        assertArrayEquals( new int[]{1, 1}, rover.getPosition() );
+        assertEquals( "East", rover.getOrientation() );
+    }
+
+    @Test
+    public void test10RoverCanReceiveManyInstructions(){
+        Rover rover = new Rover(0, 0, new North() );
+        rover.execute("frf");
+        rover.execute("lfrfllzsr");
+        assertArrayEquals( new int[]{2, 2}, rover.getPosition() );
+        assertEquals( "West", rover.getOrientation() );
+    }
+
+    @Test
+    public void test10RoverCanOpenTopHatch(){
         Rover rover = new Rover(0, 0, new North() );
         rover.execute("O");
         assertFalse( rover.topHatchClosed() );
     }
 
     @Test
-    public void test10RoverCanOpenBottomHatch(){
+    public void test11RoverCanOpenBottomHatch(){
         Rover rover = new Rover(0, 0, new North() );
         rover.execute("o");
         assertFalse( rover.bottomHatchClosed() );
     }
 
     @Test
-    public void test11RoverCantOpenBothHatches(){
+    public void test12RoverCantOpenBothHatches(){
         Rover rover = new Rover(0, 0, new North() );
         assertThrowsLike( Hatch.bothHatchesCantOpen, () -> rover.execute("Oo") );
     }
 
     @Test
-    public void test12RoverCanCloseHatch(){
+    public void test13RoverCanCloseTopHatch(){
         Rover rover = new Rover(0, 0, new North() );
         rover.execute('O');
         assertFalse( rover.topHatchClosed() );
@@ -102,33 +119,56 @@ public class TestsRover {
     }
 
     @Test
-    public void test13RoverCantCloseHatchIfAlreadyClosed(){
+    public void test14RoverCanCloseBottomHatch(){
+        Rover rover = new Rover(0, 0, new North() );
+        rover.execute('o');
+        assertFalse( rover.bottomHatchClosed() );
+        rover.execute('c');
+        assertTrue( rover.bottomHatchClosed() );
+    }
+
+    @Test
+    public void test15RoverCantCloseHatchIfAlreadyClosed(){
         Rover rover = new Rover(0, 0, new North() );
         assertThrowsLike( Hatch.cantCloseHatches, () -> rover.execute('c') );
     }
 
     @Test
-    public void test14RoverCanCollectAirSample(){
+    public void test16RoverCanCollectAirSample(){
         Rover rover = new Rover(0, 0, new North() );
         rover.execute("Oa");
         assertTrue( rover.hasAirSample() );
     }
 
     @Test
-    public void test15RoverCantCollectAirSampleIfHatchClosed(){
+    public void test17RoverCanCollectTwoAirSample(){
+        Rover rover = new Rover(0, 0, new North() );
+        rover.execute("Oaa");
+        assertTrue( rover.hasAirSample() );
+    }
+
+    @Test
+    public void test18RoverCantCollectAirSampleIfTopHatchClosed(){
         Rover rover = new Rover(0, 0, new North() );
         assertThrowsLike( Hatch.cantCollect, () -> rover.execute("oa") );
     }
 
     @Test
-    public void test16RoverCanCollectDirtSample(){
+    public void test19RoverCanCollectDirtSample(){
         Rover rover = new Rover(0, 0, new North() );
         rover.execute("oi");
         assertTrue( rover.hasDirtSample() );
     }
 
     @Test
-    public void test17RoverCantCollectDirtSampleIfHatchClosed(){
+    public void test20RoverCanCollectTwoDirtSample(){
+        Rover rover = new Rover(0, 0, new North() );
+        rover.execute("oii");
+        assertTrue( rover.hasDirtSample() );
+    }
+
+    @Test
+    public void test21RoverCantCollectDirtSampleIfBottomHatchClosed(){
         Rover rover = new Rover(0, 0, new North() );
         assertThrowsLike( Hatch.cantCollect, () -> rover.execute("Oi") );
     }
