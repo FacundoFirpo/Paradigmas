@@ -31,16 +31,18 @@ public class Rover {
         return orientation.toString();
     }
 
-    public void execute( String instruction ) {
+    public Rover execute( String instruction ) {
         instruction.chars()
                 .takeWhile(c -> c == 'f' || c == 'b' || c == 'l' || c == 'r' ||
                         c == 'O' || c == 'o' || c == 'c' || c == 'a' || c == 'i')
                 .forEach( order -> execute( (char) order ) );
+        return this;
     }
 
 
-    public void execute( char order ) {
+    public Rover execute( char order ) {
         Instructions.instructionFor( order,this );
+        return this;
     }
 
     public void moveNorth(){
