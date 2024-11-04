@@ -141,6 +141,23 @@ public class TestsRover {
         assertThrowsLike( Hatch.cantCollect, () -> roverAt00LookingNorthWithInstruction("Oi") );
     }
 
+    @Test
+    public void test23RoverCanMoveAfterCollectingAirSample(){
+        assertPosition(roverAt00LookingNorthWithInstruction("Oafr"), 0, 1, "East");
+    }
+
+    @Test
+    public void test24RoverCanMoveAfterCollectingDirtSamples(){
+        assertPosition(roverAt00LookingNorthWithInstruction("oifr"), 0, 1, "East");
+    }
+
+    @Test
+    public void test25RoverCanCollectAirSampleAfterCollectingDirtSample(){
+        Rover rover = roverAt00LookingNorthWithInstruction("oicOa");
+        assertTrue( rover.hasAirSample() );
+        assertTrue( rover.hasDirtSample() );
+    }
+
     private Rover roverAt00LookingNorth() {
         return new Rover(0, 0, new North());
     }
