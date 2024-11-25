@@ -26,6 +26,9 @@ public class Jugador {
     }
 
     public void paga(){
+        if (this.fichas == 0){
+            throw new RuntimeException("No tiene fichas");
+        }
         this.fichas -= 1;
     }
 }

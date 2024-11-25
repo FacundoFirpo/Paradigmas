@@ -127,6 +127,75 @@ public class JuegoTests {
         assertThrowsLike("Jugador no encontrado", () ->  juego.paga("Carlos"));
     }
 
+    @Test
+    public void test13JugadorQueNoEstaJugandoPuntaje(){
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("Jugador no encontrado", () ->  juego.puntajeDe("Carlos"));
+    }
+
+    @Test
+    public void test14JugadorSinFichasNoPuedepagar() {
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
+
+        assertThrowsLike("No tiene fichas", () -> juego.paga("Julio"));
+    }
     private static void assertThrowsLike( String expectedMsg, Executable expression ) {
         assertEquals( expectedMsg,
                 assertThrows( RuntimeException.class, expression ).getMessage() );
