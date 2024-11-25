@@ -99,6 +99,34 @@ public class JuegoTests {
         assertEquals(11, juego.puntajeDe("Bruno"));
     }
 
+    @Test
+    public void test09JugadorTomaCuandoNoEsSuTurno(){
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("No es el turno de Emilio", () ->  juego.toma("Emilio"));
+    }
+
+    @Test
+    public void test10JugadorPagaCuandoNoEsSuTurno(){
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("No es el turno de Emilio", () ->  juego.paga("Emilio"));
+    }
+
+    @Test
+    public void test11JugadorQueNoEstaJugandoToma(){
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("Jugador no encontrado", () ->  juego.paga("Carlos"));
+    }
+
+    @Test
+    public void test12JugadorQueNoEstaJugandoPaga(){
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("Jugador no encontrado", () ->  juego.paga("Carlos"));
+    }
+
     private static void assertThrowsLike( String expectedMsg, Executable expression ) {
         assertEquals( expectedMsg,
                 assertThrows( RuntimeException.class, expression ).getMessage() );

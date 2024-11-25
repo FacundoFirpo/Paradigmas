@@ -1,26 +1,26 @@
 package juego;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Juego {
 
     private ArrayList<Jugador> jugadores = new ArrayList<>();
     private ArrayList<Carta> pilon;
+    private Jugador turnoDe;
+    private static ArrayList<TiposDeJuego> tiposDeJuego = new ArrayList<>(List.of( new JuegoChico(), new JuegoMediano(), new JuegoGrande() ));
 
     public Juego(ArrayList<String> jugadores, ArrayList<Carta> mazo){
-        if (jugadores.size() < 3 || jugadores.size() > 7){
-            throw new RuntimeException("Cantidad de jugadores invalida");
-        }
 
-        if (jugadores.size() <=5 ){
-            jugadores.forEach(jug -> this.jugadores.add(new Jugador(jug, 11)));
-        } else if (jugadores.size() == 6) {
-            jugadores.forEach(jug -> this.jugadores.add(new Jugador(jug, 9)));
-        } else {
-            jugadores.forEach(jug -> this.jugadores.add(new Jugador(jug, 7)));
-        }
+        TiposDeJuego modoDeJuego = tiposDeJuego.stream()
+                .filter(tipo -> tipo.cantJugadores(jugadores.size()))
+                .findFirst()
+                .orElseThrow(() -> new RuntimeException("Cantidad de jugadores invalida"));
 
-        this.pilon =mazo;
+        jugadores.forEach(jug -> this.jugadores.add(new Jugador(jug, modoDeJuego.fichasIniciales())));
+
+        this.pilon = mazo;
+        this.turnoDe = this.jugadores.getFirst();
     }
 
     public int puntajeDe(String jugador){
@@ -30,13 +30,27 @@ public class Juego {
 
     public void toma(String jugador){
         Jugador objetivo = buscarJugador(jugador);
+        esTurno(objetivo);
         objetivo.toma(pilon.removeFirst());
+        pasarTurno();
     }
 
     public void paga(String jugador){
         Jugador objetivo = buscarJugador(jugador);
+        esTurno(objetivo);
         objetivo.paga();
         pilon.getFirst().pagaron();
+        pasarTurno();
+    }
+
+    public void esTurno(Jugador objetivo){
+        if (turnoDe != objetivo){
+            throw new RuntimeException("No es el turno de " + objetivo.nombre());
+        }
+    }
+
+    private void pasarTurno() {
+        turnoDe = jugadores.get((jugadores.indexOf(turnoDe) + 1) % jugadores.size());
     }
 
     private Jugador buscarJugador(String jugador) {
