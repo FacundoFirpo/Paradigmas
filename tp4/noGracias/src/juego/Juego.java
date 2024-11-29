@@ -8,6 +8,7 @@ public class Juego {
     private ArrayList<Jugador> jugadores = new ArrayList<>();
     private ArrayList<Carta> pilon;
     private Jugador turnoDe;
+    private EstadoDeJuego estadoDeJuego = new JuegoEnProgreso();
     private static ArrayList<TiposDeJuego> tiposDeJuego = new ArrayList<>(List.of( new JuegoChico(), new JuegoMediano(), new JuegoGrande() ));
 
     public Juego(ArrayList<String> jugadores, ArrayList<Carta> mazo){
@@ -31,14 +32,14 @@ public class Juego {
     public void toma(String jugador){
         Jugador objetivo = buscarJugador(jugador);
         esTurno(objetivo);
-        objetivo.toma(pilon.removeFirst());
+        estadoDeJuego.toma(objetivo, pilon.removeFirst());
         pasarTurno();
     }
 
     public void paga(String jugador){
         Jugador objetivo = buscarJugador(jugador);
         esTurno(objetivo);
-        objetivo.paga();
+        estadoDeJuego.paga(objetivo);
         pilon.getFirst().pagaron();
         pasarTurno();
     }
@@ -51,6 +52,9 @@ public class Juego {
 
     private void pasarTurno() {
         turnoDe = jugadores.get((jugadores.indexOf(turnoDe) + 1) % jugadores.size());
+        if (pilon.isEmpty()){
+            estadoDeJuego = new JuegoTerminado();
+        }
     }
 
     private Jugador buscarJugador(String jugador) {
@@ -62,6 +66,13 @@ public class Juego {
 
     public ArrayList<Carta> getPilon(){
         return pilon;
+    }
+
+    public String ganador(){
+        return jugadores.stream()
+                .max((jug1, jug2) -> jug1.puntaje() - jug2.puntaje())
+                .get()
+                .nombre();
     }
 
 }
