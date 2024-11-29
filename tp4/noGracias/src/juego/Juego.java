@@ -68,11 +68,10 @@ public class Juego {
         return pilon;
     }
 
-    public String ganador(){
-        return jugadores.stream()
-                .max((jug1, jug2) -> jug1.puntaje() - jug2.puntaje())
-                .get()
-                .nombre();
+    public String ganador() {
+        Jugador ganador = jugadores.stream()
+                .max((j1, j2) -> Integer.compare(j1.puntaje(), j2.puntaje()))
+                .orElseThrow(() -> new RuntimeException("No hay jugadores."));
+        return "El ganador es: " + ganador.nombre();
     }
-
 }
