@@ -60,4 +60,8 @@ public class Juego {
                 .orElseThrow(() -> new RuntimeException("Jugador no encontrado"));
     }
 
+    public ArrayList<Carta> getPilon(){
+        return pilon;
+    }
+
 }

@@ -196,6 +196,29 @@ public class JuegoTests {
 
         assertThrowsLike("No tiene fichas", () -> juego.paga("Julio"));
     }
+
+    @Test
+    public void test15MazoDeCartasInvalido() {
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("Numero de carta inexistente",() -> juego.getPilon().add(new Carta(2)));
+    }
+
+//    @Test
+//    public void test16TerminaElMazoYElJuego() {
+//        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos"));
+//        Juego juego = new Juego(jugadores, mazoDe3);
+//
+//        juego.toma("Julio");
+//        juego.toma("Emilio");
+//        juego.toma("Bruno");
+//
+//        assertThrowsLike("Juego terminado", () -> juego.toma("Pedro"));
+//        assertThrowsLike("Juego terminado", () -> juego.paga("Pedro"));
+//
+//    }
+
+
     private static void assertThrowsLike( String expectedMsg, Executable expression ) {
         assertEquals( expectedMsg,
                 assertThrows( RuntimeException.class, expression ).getMessage() );
