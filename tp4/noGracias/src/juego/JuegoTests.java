@@ -198,14 +198,21 @@ public class JuegoTests {
     }
 
     @Test
-    public void test15MazoDeCartasInvalido() {
+    public void test15CartaMenorATresInvalida() {
         ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
         Juego juego = new Juego(jugadores, mazoDe3);
         assertThrowsLike("Numero de carta inexistente",() -> juego.getPilon().add(new Carta(2)));
     }
 
+    @Test
+    public void test16CartaMayorATreintaYCincoInvalida() {
+        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
+        Juego juego = new Juego(jugadores, mazoDe3);
+        assertThrowsLike("Numero de carta inexistente",() -> juego.getPilon().add(new Carta(36)));
+    }
+
 //    @Test
-//    public void test16TerminaElMazoYElJuego() {
+//    public void test17TerminaElMazoYElJuego() {
 //        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos"));
 //        Juego juego = new Juego(jugadores, mazoDe3);
 //
