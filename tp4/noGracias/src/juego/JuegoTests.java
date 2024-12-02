@@ -119,63 +119,25 @@ public class JuegoTests {
     @Test
     public void test14JugadorSinFichasNoPuedepagar() {
         Juego juego = juegoDe7();
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
-
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
-
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
-
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
-
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
-
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
-
-        juego.paga("Julio");
-        juego.paga("Emilio");
-        juego.paga("Bruno");
-        juego.paga("Pedro");
-        juego.paga("Facu");
-        juego.paga("Juan");
-        juego.paga("Carlos");
+        todosPagan(juego);
+        todosPagan(juego);
+        todosPagan(juego);
+        todosPagan(juego);
+        todosPagan(juego);
+        todosPagan(juego);
+        todosPagan(juego);
 
         assertThrowsLike("No tiene fichas", () -> juego.paga("Julio"));
+    }
+
+    private void todosPagan(Juego juego) {
+        juego.paga("Julio");
+        juego.paga("Emilio");
+        juego.paga("Bruno");
+        juego.paga("Pedro");
+        juego.paga("Facu");
+        juego.paga("Juan");
+        juego.paga("Carlos");
     }
 
     @Test
