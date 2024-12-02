@@ -29,19 +29,21 @@ public class Juego {
         return objetivo.puntaje();
     }
 
-    public void toma(String jugador){
+    public Juego toma(String jugador){
         Jugador objetivo = buscarJugador(jugador);
         esTurno(objetivo);
-        estadoDeJuego.toma(objetivo, pilon.removeFirst());
+        estadoDeJuego.toma(objetivo, pilon);
         pasarTurno();
+        return this;
     }
 
-    public void paga(String jugador){
+    public Juego paga(String jugador){
         Jugador objetivo = buscarJugador(jugador);
         esTurno(objetivo);
         estadoDeJuego.paga(objetivo);
         pilon.getFirst().pagaron();
         pasarTurno();
+        return this;
     }
 
     public void esTurno(Jugador objetivo){

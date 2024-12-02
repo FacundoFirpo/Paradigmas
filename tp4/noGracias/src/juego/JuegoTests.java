@@ -23,8 +23,7 @@ public class JuegoTests {
 
     @Test
     public void test01JuegoDe3ArrancaConFichasCorrectas(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
+        Juego juego = juegoDe3();
         assertEquals(11, juego.puntajeDe("Julio"));
         assertEquals(11, juego.puntajeDe("Emilio"));
         assertEquals(11, juego.puntajeDe("Bruno"));
@@ -32,8 +31,7 @@ public class JuegoTests {
 
     @Test
     public void test02JuegoDe5ArrancaConPuntajeCorrecto(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu"));
-        Juego juego = new Juego(jugadores, mazoDe3);
+        Juego juego = new Juego(new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu")), mazoDe3);
         assertEquals(11, juego.puntajeDe("Julio"));
         assertEquals(11, juego.puntajeDe("Emilio"));
         assertEquals(11, juego.puntajeDe("Bruno"));
@@ -55,8 +53,7 @@ public class JuegoTests {
 
     @Test
     public void test04JuegoDe7ArrancaConPuntajeCorrecto(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos"));
-        Juego juego = new Juego(jugadores, mazoDe3);
+        Juego juego = juegoDe7();
         assertEquals(7, juego.puntajeDe("Julio"));
         assertEquals(7, juego.puntajeDe("Emilio"));
         assertEquals(7, juego.puntajeDe("Bruno"));
@@ -80,9 +77,7 @@ public class JuegoTests {
 
     @Test
     public void test07JugadorTomaCartaRestaPuntos(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        juego.toma("Julio");
+        Juego juego = juegoDe3().toma("Julio");
         assertEquals(8, juego.puntajeDe("Julio"));
         assertEquals(11, juego.puntajeDe("Emilio"));
         assertEquals(11, juego.puntajeDe("Bruno"));
@@ -90,10 +85,7 @@ public class JuegoTests {
 
     @Test
     public void test08JugadorTomaCartaQuePagaron(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        juego.paga("Julio");
-        juego.toma("Emilio");
+        Juego juego = juegoDe3().paga("Julio").toma("Emilio");
         assertEquals(10, juego.puntajeDe("Julio"));
         assertEquals(9, juego.puntajeDe("Emilio"));
         assertEquals(11, juego.puntajeDe("Bruno"));
@@ -101,43 +93,32 @@ public class JuegoTests {
 
     @Test
     public void test09JugadorTomaCuandoNoEsSuTurno(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("No es el turno de Emilio", () ->  juego.toma("Emilio"));
+        assertThrowsLike("No es el turno de Emilio", () ->  juegoDe3().toma("Emilio"));
     }
 
     @Test
     public void test10JugadorPagaCuandoNoEsSuTurno(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("No es el turno de Emilio", () ->  juego.paga("Emilio"));
+        assertThrowsLike("No es el turno de Emilio", () ->  juegoDe3().paga("Emilio"));
     }
 
     @Test
     public void test11JugadorQueNoEstaJugandoToma(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("Jugador no encontrado", () ->  juego.paga("Carlos"));
+        assertThrowsLike("Jugador no encontrado", () ->  juegoDe3().paga("Carlos"));
     }
 
     @Test
     public void test12JugadorQueNoEstaJugandoPaga(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("Jugador no encontrado", () ->  juego.paga("Carlos"));
+        assertThrowsLike("Jugador no encontrado", () ->  juegoDe3().paga("Carlos"));
     }
 
     @Test
     public void test13JugadorQueNoEstaJugandoPuntaje(){
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("Jugador no encontrado", () ->  juego.puntajeDe("Carlos"));
+        assertThrowsLike("Jugador no encontrado", () ->  juegoDe3().puntajeDe("Carlos"));
     }
 
     @Test
     public void test14JugadorSinFichasNoPuedepagar() {
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos"));
-        Juego juego = new Juego(jugadores, mazoDe3);
+        Juego juego = juegoDe7();
         juego.paga("Julio");
         juego.paga("Emilio");
         juego.paga("Bruno");
@@ -199,31 +180,36 @@ public class JuegoTests {
 
     @Test
     public void test15CartaMenorATresInvalida() {
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("Numero de carta inexistente",() -> juego.getPilon().add(new Carta(2)));
+        assertThrowsLike("Numero de carta inexistente",() -> juegoDe3().getPilon().add(new Carta(2)));
     }
 
     @Test
     public void test16CartaMayorATreintaYCincoInvalida() {
-        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno"));
-        Juego juego = new Juego(jugadores, mazoDe3);
-        assertThrowsLike("Numero de carta inexistente",() -> juego.getPilon().add(new Carta(36)));
+        assertThrowsLike("Numero de carta inexistente",() -> juegoDe3().getPilon().add(new Carta(36)));
     }
 
-//    @Test
-//    public void test17TerminaElMazoYElJuego() {
-//        ArrayList<String> jugadores = new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos"));
-//        Juego juego = new Juego(jugadores, mazoDe3);
-//
-//        juego.toma("Julio");
-//        juego.toma("Emilio");
-//        juego.toma("Bruno");
-//
-//        assertThrowsLike("Juego terminado", () -> juego.toma("Pedro"));
-//        assertThrowsLike("Juego terminado", () -> juego.paga("Pedro"));
-//
-//    }
+    @Test
+    public void test17TerminaElMazoYElJuego() {
+        Juego juego = juegoDe3();
+
+        juego.toma("Julio");
+        juego.toma("Emilio");
+        juego.toma("Bruno");
+
+        assertEquals("El ganador es: Julio", juego.ganador());
+
+        assertThrowsLike("Juego terminado", () -> juego.toma("Julio"));
+        assertThrowsLike("Juego terminado", () -> juego.paga("Julio"));
+
+    }
+
+    private Juego juegoDe3() {
+        return new Juego(new ArrayList<>(List.of("Julio", "Emilio", "Bruno")) , mazoDe3);
+    }
+
+    private Juego juegoDe7() {
+        return new Juego(new ArrayList<>(List.of("Julio", "Emilio", "Bruno", "Pedro", "Facu", "Juan", "Carlos")), mazoDe3);
+    }
 
 
     private static void assertThrowsLike( String expectedMsg, Executable expression ) {
